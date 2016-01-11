@@ -14,14 +14,14 @@
                         <div class="vote">
                             <input type="hidden" name="_id_" value="{$q.id}">
 
-                            <a class="{$vote_type==VOTEUP?'vote-up-on':'vote-up-off'}"
+                            <a class="{$q['vote_type']==VOTEUP?'vote-up-on':'vote-up-off'}"
                                title="This question shows research effort; it is useful and clear (click again to undo)">up
                                 vote</a>
                             <span itemprop="upvoteCount" class="vote-count-post ">{$q.votes}</span>
-                            <a class="{$vote_type==VOTEDOWN?'vote-down-on':'vote-down-off'}"
+                            <a class="{$q['vote_type']==VOTEDOWN?'vote-down-on':'vote-down-off'}"
                                title="This question does not show any research effort; it is unclear or not useful (click again to undo)">down
                                 vote</a>
-                            <a class="{$favorite==1?'star-on':'star-off'}"
+                            <a class="{$q['favorite']==1?'star-on':'star-off'}"
                                title="This is a favorite question (click again to undo)">favorite</a>
 
                             <div class="favoritecount"><b>{$q.favorite}</b></div>

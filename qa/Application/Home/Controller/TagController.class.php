@@ -9,9 +9,8 @@
 namespace Home\Controller;
 
 use Think\Page;
-use Think\Controller;
 
-class TagController extends Controller {
+class TagController extends BaseController {
     public function index($p = 1) {
         $tag = M('tag');
         $count = $tag->count();
@@ -26,6 +25,7 @@ class TagController extends Controller {
     }
 
     public function create(){
+        $this->checkAuth();
         if($_POST){
             $name = $_POST['tagfilter'];
             //check 以后完善

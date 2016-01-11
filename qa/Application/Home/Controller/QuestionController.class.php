@@ -23,9 +23,8 @@ class QuestionController extends BaseController
         $page = new Page($count, C('PAGESIZE'));
         $show = $page->show();
         $query = "call proc_question_orderby_votes_desc($page->firstRow,$page->listRows) ";
-        echo $query;
-        $questions = M('question')->query($query);
 
+        $questions = M('question')->query($query);
         $this->assign('page', $show);
         $this->assign('questions', $questions);
         $this->display();
@@ -34,50 +33,30 @@ class QuestionController extends BaseController
 
     public function details($id)
     {
-        $map['q.id'] = array('eq', $id);
-        $q = M('question q')->where($map)->join('auth_user u on q.user_id= u.id')
-            ->field('q.id,q.title,q.votes,q.content,q.answers,q.views,q.ct,u.username,q.user_id,q.favorite')->select();
-        if (hadLogin()) {
-            unset($map);
-            $map['user_id'] = array('eq', getUserId());
-            $map['question_id'] = array('eq', $id);
-            $qv = M('qvote')->where($map)->find();
-            if ($qv) {
-                $this->assign('vote_type', $qv['vote_type']);
-            }
-            $fq = M('fquestion')->where($map)->find();
-            if ($fq) {
-                $this->assign('favorite', 1);
-            }
-        }
-        if ($q) {
-            $q = $q[0];
-            $tags = $this->getQuestionTags($id);
-            $q['tags'] = $tags;
+        $query = " call proc_question_details($id) ";
+        $question = M('question')->query($query);
 
-            $mapanswer['question_id'] = array('eq', $q['id']);
-            $answers = M('answer a')
-                ->where($mapanswer)
-                ->order('votes desc')
-                ->join(' auth_user u on a.user_id = u.id')
-                ->field('a.id,a.votes,a.answer,a.user_id,u.username,a.ct')
-                ->select();
-            if (hadLogin() && $answers) {
-                foreach ($answers as &$a) {
-                    $mapav['answer_id'] = array('eq', $a['id']);
-                    $mapav['user_id'] = array('eq', getUserId());
-                    $av = M('avote')->where($mapav)->find();
-                    if ($av) {
-                        $a['vote_type'] = $av['vote_type'];
-                    }
-                    unset($mapav);
+        $mapanswer['question_id'] = array('eq', $id);
+        $answers = M('answer a')
+            ->where($mapanswer)
+            ->order('votes desc')
+            ->join(' auth_user u on a.user_id = u.id')
+            ->field('a.id,a.votes,a.answer,a.user_id,u.username,a.ct')
+            ->select();
+        if (hadLogin() && $answers) {
+            foreach ($answers as &$a) {
+                $mapav['answer_id'] = array('eq', $a['id']);
+                $mapav['user_id'] = array('eq', getUserId());
+                $av = M('avote')->where($mapav)->find();
+                if ($av) {
+                    $a['vote_type'] = $av['vote_type'];
                 }
+                unset($mapav);
             }
-            $q['q_answers'] = $answers;
-
-            $this->assign('q', $q);
-            $this->display();
         }
+        $question[0]['q_answers'] = $answers;
+        $this->assign('q', $question[0]);
+        $this->display();
     }
 
     function getQuestionTags($qid)
@@ -94,7 +73,7 @@ class QuestionController extends BaseController
         $question = M('question q')
             ->join(' question_tags qt on q.id = qt.question_id ')
             ->join(' tag t on qt.tag_id = t.id ')
-            ->where(" t.name = '" . $name."'");
+            ->where(" t.name = '" . $name . "'");
 
         $count = $question->count();
         $page = new \Think\Page($count, C('PAGESIZE'));
@@ -105,7 +84,7 @@ class QuestionController extends BaseController
             ->join(' question_tags qt on q.id = qt.question_id ')
             ->join('auth_user u on q.user_id = u.id')
             ->join(' tag t on qt.tag_id = t.id ')
-            ->where(" t.name = '" . $name."'")
+            ->where(" t.name = '" . $name . "'")
             ->order('q.votes desc')
             ->limit($page->firstRow . ',' . $page->listRows)
             ->field('q.id,q.title,q.votes,q.answers,q.views,q.ct,u.username,q.user_id')
@@ -125,6 +104,7 @@ class QuestionController extends BaseController
 
     public function answer()
     {
+        $this->checkAuth();
         if (IS_POST) {
             $answer_str = $_POST['answer'];
             $answer_str = urldecode($answer_str);
