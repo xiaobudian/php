@@ -223,6 +223,11 @@
       <exported-key name="question_tags_tag_id_2a5adaec_fk_tag_id" table="question_tags" schema="" catalog="qa" columns="tag_id"/>
       <index name="tag_user_id_2220e8d4_fk_auth_user_id" unique="false" columns="user_id"/>
     </table>
+    <procedure name="proc_question_details" schema="" catalog="qa" type="1">
+      <prototype>
+        <parameter name="id" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+      </prototype>
+    </procedure>
     <procedure name="proc_question_orderby_votes_desc" schema="" catalog="qa" type="1">
       <prototype>
         <parameter name="firstRow" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
