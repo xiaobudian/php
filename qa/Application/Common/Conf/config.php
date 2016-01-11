@@ -8,7 +8,7 @@ return array(
     'DB_HOST' => '127.0.0.1', // 服务器地址127.0.0.1
     'DB_NAME' => 'qa', // 数据库名称
     'DB_USER' => 'root', // 数据库登陆名称
-    'DB_PWD' => '123456', // 登陆密码
+    'DB_PWD' => 'root', // 登陆密码
     'DB_PORT' => '3306', // 数据库端口
     'DB_CHARSET' => 'utf8', // 字符集
 
@@ -29,7 +29,7 @@ return array(
     'MAIL_CHARSET' => 'utf-8',//设置邮件编码
     'MAIL_ISHTML' => TRUE, // 是否HTML格式邮件
 
-    'PAGESIZE' => 10,
+    'PAGESIZE' => 2,
     'TAGPAGESIZE' => 32,
     'TAGSUGGESTION' => 6,
 );

@@ -22,7 +22,8 @@ class QuestionController extends BaseController
         $count = $question->count();
         $page = new Page($count, C('PAGESIZE'));
         $show = $page->show();
-        $query = "call proc_question_page_votes_desc($page->firstRow,$page->listRows) ";
+        $query = "call proc_question_orderby_votes_desc($page->firstRow,$page->listRows) ";
+        echo $query;
         $questions = M('question')->query($query);
 
         $this->assign('page', $show);
