@@ -1,0 +1,117 @@
+<div id="mainbar-full">
+    <div class="subheader">
+        <h1 id="h-users">Users</h1>
+
+        <!--<div id="tabs">-->
+            <!--<a class="youarehere" href="/users?tab=reputation" data-nav-xhref=""-->
+               <!--title="Users with the highest reputation scores" data-value="reputation">reputation</a>-->
+            <!--<a href="/users?tab=newusers" data-nav-xhref="" title="Users who joined in the last 30 days"-->
+               <!--data-value="newusers">new users</a>-->
+            <!--<a href="/users?tab=voters" data-nav-xhref="" title="Users who voted more than 10 times"-->
+               <!--data-value="voters">voters</a>-->
+            <!--<a href="/users?tab=editors" data-nav-xhref="" title="Users who edited at least 5 posts"-->
+               <!--data-value="editors">editors</a>-->
+            <!--<a href="/users?tab=moderators" data-nav-xhref="" title="Our current community moderators"-->
+               <!--data-value="moderators">moderators</a>-->
+        <!--</div>-->
+    </div>
+
+
+    <div class="page-description" style="padding-bottom: 10px;">
+
+        <table style="width: 100%;">
+            <tbody>
+            <tr>
+                <td>
+                    Type to find users:<input id="userfilter" name="userfilter" class="userfilter" type="text" value=""
+                                              style="margin-left: 10px;">
+                </td>
+                <!--<td style="text-align: right;">-->
+                    <!--<div id="tabs-interval" class="subtabs">-->
+                        <!--<a href="/users?tab=Reputation&amp;filter=all" data-nav-xhref="" title="2008-07-31 to today"-->
+                           <!--data-value="all">all</a>-->
+                        <!--<a href="/users?tab=Reputation&amp;filter=year" data-nav-xhref="" title="2015-01-01 to today"-->
+                           <!--data-value="year">year</a>-->
+                        <!--<a href="/users?tab=Reputation&amp;filter=quarter" data-nav-xhref="" title="2015-10-01 to today"-->
+                           <!--data-value="quarter">quarter</a>-->
+                        <!--<a href="/users?tab=Reputation&amp;filter=month" data-nav-xhref="" title="2015-12-01 to today"-->
+                           <!--data-value="month">month</a>-->
+                        <!--<a class="youarehere" href="/users?tab=Reputation&amp;filter=week" data-nav-xhref=""-->
+                           <!--title="2015-12-13 to today" data-value="week">week</a>-->
+                    <!--</div>-->
+                <!--</td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="user-browser " class="users-page">
+        <table>
+            <tbody>
+            <php>
+                $tr=1;
+                foreach($users as $u){
+
+                    if(($tr-1)%4==0){
+                        echo "<tr>";
+                    }
+                    $str = '<td>
+                                <div class="user-info  user-hover">
+                                    <div class="user-gravatar48">
+                                        <a href="/index.php/Home/User/details/'.$u['id'].'">
+                                            <div class="gravatar-wrapper-48"><img
+                                                    src="'.$u['pic'].'"
+                                                    alt="" width="48" height="48"></div>
+                                        </a>
+                                    </div>
+                                    <div class="user-details">
+                                        <a href="/index.php/Home/User/details/'.$u['id'].'">'.$u['username'].'</a>
+                                        <span class="user-location">'.$u['location'].'</span>
+
+                                        <div class="-flair">
+                                        <span class="reputation-score" title="reputation this week: 790 total reputation: 1342"
+                                              dir="ltr">'.$u['reputation'].'</span>
+                                        </div>
+                                    </div>
+                                    <div class="user-tags">
+                                        <a href="questions/tagged/ios">ios</a>, <a href="questions/tagged/swift">swift</a>, <a
+                                            href="questions/tagged/php">php</a>
+                                    </div>
+                                </div>
+                            </td>';
+                    echo $str;
+                    if($tr%4==0){
+                        echo "</tr>";
+                    }
+                    $tr++;
+                }
+            </php>
+            </tbody>
+        </table>
+        <div class="pager fr">
+
+{$page}
+            <!--<span class="page-numbers current">1</span> <a href="/users?page=2&amp;tab=reputation&amp;filter=week"-->
+                                                           <!--title="go to page 2"> <span class="page-numbers">2</span>-->
+        <!--</a>-->
+            <!--<a href="/users?page=3&amp;tab=reputation&amp;filter=week" title="go to page 3"> <span class="page-numbers">3</span>-->
+            <!--</a>-->
+            <!--<a href="/users?page=4&amp;tab=reputation&amp;filter=week" title="go to page 4"> <span class="page-numbers">4</span>-->
+            <!--</a>-->
+            <!--<a href="/users?page=5&amp;tab=reputation&amp;filter=week" title="go to page 5"> <span class="page-numbers">5</span>-->
+            <!--</a>-->
+            <!--<span class="page-numbers dots">…</span> <a href="/users?page=129120&amp;tab=reputation&amp;filter=week"-->
+                                                        <!--title="go to page 129120"> <span-->
+                <!--class="page-numbers">129120</span> </a>-->
+            <!--<a href="/users?page=2&amp;tab=reputation&amp;filter=week" rel="next" title="go to page 2"> <span-->
+                    <!--class="page-numbers next"> next</span> </a>-->
+
+        </div>
+    </div>
+
+    <!--<div id="users-legend" style="float: left; margin-top: 25px; margin-bottom: 10px;">-->
+        <!--<b><a href="http://stackexchange.com/leagues/week/stackoverflow">weekly / monthly / quarterly reputation-->
+            <!--leagues</a></b>-->
+    <!--</div>-->
+
+</div>

@@ -1,0 +1,13 @@
+<php>
+    $tags = $q['tags'];
+    if(strpos($q['tags'],',')){
+        $tags = explode(',',$q['tags']);
+    }
+    $count = count($tags);
+    for( $i = 0; $i < $count;$i++){
+        $url = questiontaggedurl($tags[$i]);
+        echo "<a href='$url' class='post-tag' title='show questions tagged &#39;$tags[$i]&#39;'
+                 rel='tag'>$tags[$i]</a>";
+    }
+</php>
+

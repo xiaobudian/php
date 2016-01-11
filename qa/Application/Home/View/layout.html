@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><php>echo $Think.CONTROLLER_NAME=='Index'?'':$Think.CONTROLLER_NAME.' - ';</php>Q and A</title>
+    <link rel="shortcut icon" href="/Public/img/favicon.ico?v=4f32ecc8f43d">
+    <link rel="apple-touch-icon image_src"
+          href="/Public/img/apple-touch-icon.png?v=c78bd457575a">
+    <link rel="search" type="application/opensearchdescription+xml" title="Stack Overflow" href="/opensearch.xml">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:domain" content="stackoverflow.com"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" itemprop="image primaryImageOfPage"
+          content="http://cdn.sstatic.net/stackoverflow/img/apple-touch-icon@2.png?v=73d79a89bded&a"/>
+    <meta name="twitter:title" property="og:title" itemprop="title name" content="Newest Questions"/>
+    <meta name="twitter:description" property="og:description" itemprop="description"
+          content="Q&amp;A for professional and enthusiast programmers"/>
+    <meta property="og:url" content="http://stackoverflow.com/questions"/>
+    <js href="/Public/js/jquery-1.7.2.min.js"/>
+    <css href="/Public/css/style.css"/>
+</head>
+<body class="questions-page new-topbar">
+<div class="topbar">
+    <div class="topbar-wrapper">
+        <div class="topbar-links">
+            <div class="links-container">
+                <php>
+                    if(hadLogin()){
+                        echo ' <input type="hidden" id="hadlogin" value="1"> ';
+                        $username = getUserName();
+                        echo ' <a href="/index.php/Home/User/activity">'.$username.'</a>'.
+                             ' <a class="icon-help js-help-button" href="/index.php/Home/Account/logout">Log out</a>';
+                    }else{
+                        echo ' <input type="hidden" id="hadlogin" value="0"> ';
+                        echo ' <a class="icon-help js-help-button" href="/index.php/Home/Account/login">Log in</a>';
+                    }
+                </php>
+
+
+
+                <div class="search-container">
+                    <form id="search" action="/index.php/Home/Index/search" method="get" autocomplete="off">
+                        <input id="keyword" name="keyword" type="text" placeholder="search" value="" tabindex="1"
+                               autocomplete="off"
+                               maxlength="240"/>
+                        <script>
+                            $("#keyword").keyup(function (e) {
+                                if (e.which == 13) {
+                                    $("#search").submit();
+                                }
+                            });
+                        </script>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div id="header">
+        <br class="cbt">
+
+        <div id="">
+            <h1>
+                <a href="/" style="color:#000">
+                    Question and Answer
+                </a></h1>
+        </div>
+        <div id="hmenus">
+            <div class="nav mainnavs">
+                <ul>
+                    <li class="<php> echo CONTROLLER_NAME=='Question'?'youarehere':''; </php>">
+                        <a id="nav-questions" href="/index.php/Home/Question/index"
+                           target="Question">Questions</a></li>
+                    <li class="<php> echo CONTROLLER_NAME=='Tag'?'youarehere':''; </php>">
+                        <a id="nav-tags" href="/index.php/Home/Tag/index"
+                           target="Tag">Tags</a></li>
+                    <li class="<php> echo CONTROLLER_NAME=='User'?'youarehere':''; </php>">
+                        <a id="nav-users" href="/index.php/Home/User/index"
+                           target="User">Users</a></li>
+                    <li class="<php> echo CONTROLLER_NAME=='Badge'?'youarehere':''; </php>">
+                        <a id="nav-badges" href="/index.php/Home/Badge/index"
+                           target="Badge">Badges</a></li>
+                    <li class="<php> echo CONTROLLER_NAME=='Ask'?'youarehere':''; </php>">
+                        <a id="nav-unanswered" href="/index.php/Home/Ask/index"
+                           target="Ask">Ask Question</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div id="content" class="snippet-hidden">
+        {__CONTENT__}
+    </div>
+</div>
+<div id="footer" class="categories">
+    <div class="footerwrap">
+        <div id="footer-menu">
+            <div id="footer-sites">
+                <table>
+                    <tr>
+                        <th colspan=3>
+                            Technology
+                        </th>
+                        <th>
+                            Life / Arts
+                        </th>
+                        <th>
+                            Culture / Recreation
+                        </th>
+                        <th>
+                            Science
+                        </th>
+                        <th>
+                            Other
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ol>
+                                <li><a href="//www.baidu.com" title="professional and enthusiast programmers">百度</a>
+                                </li>
+                            </ol>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div id="copyright" style="text-align: center;">
+            &#169; Copyright
+            <php> echo date('Y');</php>
+            | Powered by 849351660@qq.com
+        </div>
+    </div>
+</div>
+</body>
+</html>
