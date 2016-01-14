@@ -3,6 +3,7 @@ namespace Home\Controller;
 
 use Think\Controller;
 use Think\Cache\Driver\Memcached;
+use Think\Exception;
 
 class IndexController extends Controller
 {
@@ -101,12 +102,29 @@ class IndexController extends Controller
     public function testago()
     {
 
-        $now = date('Y-m-d H:i:s', time() - 390*24*3600);
+        $now = date('Y-m-d H:i:s', time() - 390 * 24 * 3600);
 
         echo date2ago($now);
     }
 
-    public  function testprocmulitiresult(){
-        dump(M('tag')->query("CALL proc_question_tagged('php')"));
+    public function testquerytaggedquestion()
+    {
+        dump(M('tag')->query("CALL proc_question_tagged(0,5,'php')"));
+    }
+
+    public function testprocexception()
+    {
+        try {
+            $result = M('question')->execute("CALL  proc_question_vote(1,10)");
+            dump($result);
+        } catch (Exception $e) {
+            $this->redirect('index');
+        }
+    }
+
+    public function testqvoteproc()
+    {
+        $result = M('question')->query("CALL  proc_question_vote(3,7,2,false)");
+        dump($result);
     }
 }

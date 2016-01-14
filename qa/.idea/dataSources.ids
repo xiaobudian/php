@@ -236,7 +236,17 @@
     </procedure>
     <procedure name="proc_question_tagged" schema="" catalog="qa" type="1">
       <prototype>
-        <parameter name="tag_name" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12" type="1" index="1"/>
+        <parameter name="firstRow" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+        <parameter name="listRows" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="2"/>
+        <parameter name="tag_name" sqlType="VARCHAR" precision="30" scale="0" nullable="true" jdbcType="12" type="1" index="3"/>
+      </prototype>
+    </procedure>
+    <procedure name="proc_question_vote" schema="" catalog="qa" type="1">
+      <prototype>
+        <parameter name="uid" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="1"/>
+        <parameter name="qid" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="2"/>
+        <parameter name="vote_type" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="3"/>
+        <parameter name="add_new" sqlType="BOOL" precision="0" scale="0" nullable="true" jdbcType="1111" type="1" index="4"/>
       </prototype>
     </procedure>
   </data-source>

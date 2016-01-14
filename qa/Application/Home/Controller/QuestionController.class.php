@@ -27,9 +27,11 @@ class QuestionController extends BaseController
     public function index($p = 1)
     {
         // 分页信息
-        $question = M('question');
-        $count = $question->count();
-        $page = new Page($count, C('PAGESIZE'));
+        if ($p == 1) {
+            $total = M('question')->count();
+            $_SESSION["question.total"] = $total;
+        }
+        $page = new \Think\Page($_SESSION["question.total"], C('PAGESIZE'));
         $show = $page->show();
         // 通过执行存储过程高效查询分页数据
         // 将问题关联的tag 采用GROUP_CONCAT 有效减少数据库查询次数
@@ -88,33 +90,20 @@ class QuestionController extends BaseController
 
     public function tagged($name, $p = 1)
     {
-        $question = M('question q')
-            ->join(' question_tags qt on q.id = qt.question_id ')
-            ->join(' tag t on qt.tag_id = t.id ')
-            ->where(" t.name = '" . $name . "'");
+        if ($p == 1) {
+            $question = M('question q')
+                ->join(' question_tags qt on q.id = qt.question_id ')
+                ->join(' tag t on qt.tag_id = t.id ')
+                ->where(" t.name = '" . $name . "'");
 
-        $count = $question->count();
-        $page = new \Think\Page($count, C('PAGESIZE'));
-        $show = $page->show();
-
-        $questions = M('question q')
-            //->fetchSql(true)
-            ->join(' question_tags qt on q.id = qt.question_id ')
-            ->join('auth_user u on q.user_id = u.id')
-            ->join(' tag t on qt.tag_id = t.id ')
-            ->where(" t.name = '" . $name . "'")
-            ->order('q.votes desc')
-            ->limit($page->firstRow . ',' . $page->listRows)
-            ->field('q.id,q.title,q.votes,q.answers,q.views,q.ct,u.username,q.user_id')
-            ->select();
-        $count = count($questions);
-        for ($i = 0; $i < $count; $i++) {
-
-            $tags = $this->getQuestionTags($questions[$i]['id']);
-
-            $questions[$i]['tags'] = $tags;
+            $total = $question->count();
+            $_SESSION["tag.$name.total"] = $total;
         }
-
+        $page = new \Think\Page($_SESSION["tag.$name.total"], C('PAGESIZE'));
+        $show = $page->show();
+        $query = "CALL proc_question_tagged($page->firstRow,$page->listRows,'$name')";
+//        dump($query);
+        $questions = M('question')->query($query);
         $this->assign('page', $show);
         $this->assign('questions', $questions);
         $this->display('index');
@@ -160,46 +149,16 @@ class QuestionController extends BaseController
         $this->redirect('/Home/Question/details/id/' . $_POST['question_id']);
     }
 
-    function vote($vote_type, $add = false)
+    function vote($vote_type, $add)
     {
         $this->checkAuth();
-
-        $Question = M('question');
-        $Question->startTrans();
-
         $uid = getUserId();
         $qid = $_POST['id'];
-        $map['user_id'] = array('eq', $uid);
-        $map['question_id'] = array('eq', $qid);
-        //删除相关记录
-        M('qvote')->where($map)->delete();
-
-        //添加相关记录
-        $r1 = true;
-        if ($add) {
-            $qv = M('qvote');
-            $qv->user_id = $uid;
-            $qv->question_id = $qid;
-            $qv->ct = date('Y-m-d H:i:s');
-            $qv->vote_type = $vote_type;
-            $r1 = $qv->add();
-        }
-        //统计
-        $mapqv['question_id'] = array('eq', $qid);
-        $mapqv['vote_type'] = array('eq', VOTEUP);
-        $vote_up_count = M('qvote')->where($mapqv)->count();
-        $mapqv['vote_type'] = array('eq', VOTEDOWN);
-        $vote_down_count = M('qvote')->where($mapqv)->count();
-        $count = $vote_up_count - $vote_down_count;
-        $Question->where(' id = ' . $qid)->setField('votes', $count);
-
-
-        if ($r1) {
-            $Question->commit();
+        $votes = M('question')->query("CALL  proc_question_vote($uid,$qid,$vote_type,$add)");
+        if ($votes) {
             $result['result'] = true;
-            $result['votes'] = $count;
+            $result['votes'] = $votes[0]['votes'];
         } else {
-            $Question->rollback();
             $result['result'] = false;
         }
         echo json_encode($result);
@@ -212,7 +171,7 @@ class QuestionController extends BaseController
 
     public function  voteupoff()
     {
-        $this->vote(VOTECANCEL);
+        $this->vote(VOTECANCEL, 'false');
     }
 
     public function  votedownon()
@@ -222,7 +181,7 @@ class QuestionController extends BaseController
 
     public function  votedownoff()
     {
-        $this->vote(VOTECANCEL);
+        $this->vote(VOTECANCEL, 'false');
     }
 
     function basefavorite($add = false)
