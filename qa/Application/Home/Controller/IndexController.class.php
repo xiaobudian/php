@@ -4,8 +4,10 @@ namespace Home\Controller;
 use Think\Controller;
 use Think\Cache\Driver\Memcached;
 
-class IndexController extends Controller {
-    public function index() {
+class IndexController extends Controller
+{
+    public function index()
+    {
 ////        echo memory_get_usage() . '<br />';
 ////        G('begin');
 //        $key = 'question:' . 'newest';
@@ -55,7 +57,8 @@ class IndexController extends Controller {
 
     }
 
-    public function mem() {
+    public function mem()
+    {
         $mem = Memcached::getInstance();
         $tags = $mem->get('tags');
         dump($tags);
@@ -80,16 +83,30 @@ class IndexController extends Controller {
 
     }
 
-    public function phpinfo() {
+    public function phpinfo()
+    {
 
         echo phpinfo();
     }
 
-    public function search($keyword){
-        if(!$keyword){
+    public function search($keyword)
+    {
+        if (!$keyword) {
             $this->redirect('index');
             die();
         }
         echo 'sss';
+    }
+
+    public function testago()
+    {
+
+        $now = date('Y-m-d H:i:s', time() - 390*24*3600);
+
+        echo date2ago($now);
+    }
+
+    public  function testprocmulitiresult(){
+        dump(M('tag')->query("CALL proc_question_tagged('php')"));
     }
 }

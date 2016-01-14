@@ -234,5 +234,10 @@
         <parameter name="listRows" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" type="1" index="2"/>
       </prototype>
     </procedure>
+    <procedure name="proc_question_tagged" schema="" catalog="qa" type="1">
+      <prototype>
+        <parameter name="tag_name" sqlType="VARCHAR" precision="20" scale="0" nullable="true" jdbcType="12" type="1" index="1"/>
+      </prototype>
+    </procedure>
   </data-source>
 </component>

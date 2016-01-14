@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by liushuai.
- * User: Administrator
- * Date: 2015.11.30
- * Time: 16:33
+ * author: liushuai 849351660@qq.com
+ * date  : 2016年1月12日10:05:04
+ *
  */
 
 namespace Home\Controller;
@@ -13,17 +12,28 @@ use Think\Controller;
 use Think\Exception;
 use Think\Page;
 
+/**
+ * Class QuestionController
+ * @package Home\Controller
+ * 问题模块
+ */
 class QuestionController extends BaseController
 {
 
+    /**
+     * 查询问题列表
+     * @param int $p 页码
+     */
     public function index($p = 1)
     {
+        // 分页信息
         $question = M('question');
         $count = $question->count();
         $page = new Page($count, C('PAGESIZE'));
         $show = $page->show();
+        // 通过执行存储过程高效查询分页数据
+        // 将问题关联的tag 采用GROUP_CONCAT 有效减少数据库查询次数
         $query = "call proc_question_orderby_votes_desc($page->firstRow,$page->listRows) ";
-
         $questions = M('question')->query($query);
         $this->assign('page', $show);
         $this->assign('questions', $questions);
@@ -31,11 +41,18 @@ class QuestionController extends BaseController
 
     }
 
+    /**
+     * 问题详情页
+     * @param $id 问题id
+     */
     public function details($id)
     {
+        // 调用存储过程查询问题详情
+        // 包含问题基本信息 用户信息 投票信息 收藏 相关tag
         $query = " call proc_question_details($id) ";
         $question = M('question')->query($query);
-
+//        dump($question);
+        //查询问题的答案
         $mapanswer['question_id'] = array('eq', $id);
         $answers = M('answer a')
             ->where($mapanswer)
@@ -43,6 +60,7 @@ class QuestionController extends BaseController
             ->join(' auth_user u on a.user_id = u.id')
             ->field('a.id,a.votes,a.answer,a.user_id,u.username,a.ct')
             ->select();
+        //如果用户已经登陆并且有答案，需要处理答案的投票信息
         if (hadLogin() && $answers) {
             foreach ($answers as &$a) {
                 $mapav['answer_id'] = array('eq', $a['id']);
