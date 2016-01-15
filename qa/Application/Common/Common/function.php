@@ -92,55 +92,77 @@ function userdetails($uid)
     return baseurl . 'User/details/id/' . $uid;
 }
 
-// convert a date into a string that tells how long ago
-// that date was.... eg: 2 days ago, 3 minutes ago.
-function ago($d)
+/**
+ * Determines the difference between two timestamps.
+ *
+ * The difference is returned in a human readable format such as "1 hour",
+ * "5 mins", "2 days".
+ *
+ * User: liushuai <849351660@qq.com>
+ * DateTime: 2016-01-15 10:32:23
+ */
+// define const
+define('MINUTE_IN_SECONDS', 60);
+define('HOUR_IN_SECONDS', 60 * MINUTE_IN_SECONDS);
+define('DAY_IN_SECONDS', 24 * HOUR_IN_SECONDS);
+define('WEEK_IN_SECONDS', 7 * DAY_IN_SECONDS);
+define('MONTH_IN_SECONDS', 30 * DAY_IN_SECONDS);
+define('YEAR_IN_SECONDS', 365 * DAY_IN_SECONDS);
+// choice single or plural
+function _n($single, $plural, $number)
 {
-    $c = getdate();
-    dump($c);
-    $p = array('year', 'mon', 'mday', 'hours', 'minutes', 'seconds');
-    $display = array('year', 'month', 'day', 'hour', 'minute', 'second');
-    $factor = array(0, 12, 30, 24, 60, 60);
-    $d = datetoarr($d);
-    dump($d);
-    for ($w = 0; $w < 6; $w++) {
-        if ($w > 0) {
-            $c[$p[$w]] += $c[$p[$w - 1]] * $factor[$w];
-            $d[$p[$w]] += $d[$p[$w - 1]] * $factor[$w];
-        }
-        if ($c[$p[$w]] - $d[$p[$w]] > 1) {
-            return ($c[$p[$w]] - $d[$p[$w]]) . ' ' . $display[$w] . 's ago';
-        }
+    if ($number > 1) {
+        return $plural;
     }
-    return '';
+    return $single;
 }
 
-// you can replace this if need be.
-// This converts my dates returned from a mysql date string
-// into an array object similar to that returned by getdate().
-function datetoarr($d)
+function human_time_diff($from, $to = '')
 {
-    preg_match("/([0-9]{4})(\\-)([0-9]{2})(\\-)([0-9]{2})([0-9]{2})(\\:)([0-9]{2})(\\:)([0-9]{2})/", $d, $matches);
-    return array(
-        'seconds' => $matches[10],
-        'minutes' => $matches[8],
-        'hours' => $matches[6],
-        'mday' => $matches[5],
-        'mon' => $matches[3],
-        'year' => $matches[1],
-    );
-}
-
-function date2ago($date)
-{
-//    preg_match("/([0-9]{4})(\\-)([0-9]{2})(\\-)([0-9]{2})([0-9]{2})(\\:)([0-9]{2})(\\:)([0-9]{2})/", $date, $matches);
-//    dump($matches);
-    $seconds = time() - strtotime($date);
-    //echo $seconds;
-    $year = floor($seconds/(365*24*3600));
-    echo $year;
-    if($year!=0){
-        return $year.'years ago';
+    if (empty($to)) {
+        $to = time();
     }
+    $date = DateTime::createFromFormat('Y-m-d H:i:s', $from);
+    $from = $date->getTimestamp();
+    $to = time();
 
+    if ($to - $from < 0) {
+        echo "Please enter the time before";
+        die();
+    }
+    $diff = (int)abs($to - $from);
+
+    if ($diff < HOUR_IN_SECONDS) {
+        $mins = round($diff / MINUTE_IN_SECONDS);
+        if ($mins <= 1)
+            $mins = 1;
+        /* translators: min=minute */
+        $since = sprintf(_n('%s min', '%s mins', $mins), $mins);
+    } elseif ($diff < DAY_IN_SECONDS && $diff >= HOUR_IN_SECONDS) {
+        $hours = round($diff / HOUR_IN_SECONDS);
+        if ($hours <= 1)
+            $hours = 1;
+        $since = sprintf(_n('%s hour', '%s hours', $hours), $hours);
+    } elseif ($diff < WEEK_IN_SECONDS && $diff >= DAY_IN_SECONDS) {
+        $days = round($diff / DAY_IN_SECONDS);
+        if ($days <= 1)
+            $days = 1;
+        $since = sprintf(_n('%s day', '%s days', $days), $days);
+    } elseif ($diff < MONTH_IN_SECONDS && $diff >= WEEK_IN_SECONDS) {
+        $weeks = round($diff / WEEK_IN_SECONDS);
+        if ($weeks <= 1)
+            $weeks = 1;
+        $since = sprintf(_n('%s week', '%s weeks', $weeks), $weeks);
+    } elseif ($diff < YEAR_IN_SECONDS && $diff >= MONTH_IN_SECONDS) {
+        $months = round($diff / MONTH_IN_SECONDS);
+        if ($months <= 1)
+            $months = 1;
+        $since = sprintf(_n('%s month', '%s months', $months), $months);
+    } elseif ($diff >= YEAR_IN_SECONDS) {
+        $years = round($diff / YEAR_IN_SECONDS);
+        if ($years <= 1)
+            $years = 1;
+        $since = sprintf(_n('%s year', '%s years', $years), $years);
+    }
+    return $since . ' ago';
 }

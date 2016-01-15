@@ -49,9 +49,12 @@ class QuestionController extends BaseController
      */
     public function details($id)
     {
+        $uid = getUserId();
+        if (!$uid)
+            $uid = 0;
         // 调用存储过程查询问题详情
         // 包含问题基本信息 用户信息 投票信息 收藏 相关tag
-        $query = " call proc_question_details($id) ";
+        $query = " call proc_question_details($id,$uid) ";
         $question = M('question')->query($query);
 //        dump($question);
         //查询问题的答案

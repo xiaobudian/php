@@ -32,7 +32,7 @@
                         <div class="started fr">
                             <div class="user-info user-hover">
                                 <div class="user-action-time">
-                                    asked <span title="2012-06-27 13:51:36Z" class="relativetime">{$q.ct}</span>
+                                    asked <span title="2012-06-27 13:51:36Z" class="relativetime">{$q.ct|human_time_diff}</span>
                                 </div>
                                 <div class="user-gravatar32">
                                     <a href="{$q.user_id|userdetails}"><div class="gravatar-wrapper-32">
@@ -42,15 +42,7 @@
                                     <a href="{$q.user_id|userdetails}">{$q.username}</a>
                                     <div class="-flair">
                                         <span class="reputation-score" title="reputation score {$q.reputation}" dir="ltr">{$q.reputation}</span>
-                                        <!--<span title="24 gold badges">-->
-                                            <!--<span class="badge1"></span>-->
-                                                <!--<span class="badgecount">24</span>-->
-                                            <!--</span>-->
-                                        <!--<span title="319 silver badges">-->
-                                            <!--<span class="badge2"></span>-->
-                                            <!--<span class="badgecount">319</span>-->
-                                        <!--</span>-->
-                                        <!--<span title="456 bronze badges"><span class="badge3"></span><span class="badgecount">456</span></span>-->
+
                                     </div>
                                 </div>
                             </div>
