@@ -68,7 +68,7 @@ class QuestionController extends BaseController
             ->where($mapanswer)
             ->order('votes desc')
             ->join(' auth_user u on a.user_id = u.id')
-            ->field('a.id,a.votes,a.answer,a.user_id,u.username,a.ct')
+            ->field('a.id,a.votes,a.answer,a.user_id,u.username,a.ct,a.accepted')
             ->select();
         //如果用户已经登陆并且有答案，需要处理答案的投票信息
         if (hadLogin() && $answers) {

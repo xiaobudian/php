@@ -169,6 +169,7 @@ class CropAvatar {
 
     private function crop($src, $dst, $data) {
         if (!empty($src) && !empty($dst) && !empty($data)) {
+            $src = iconv('UTF-8','gb2312',$src);
             switch ($this->type) {
                 case 'gif':
                     $src_img = imagecreatefromgif($src);
@@ -180,7 +181,6 @@ class CropAvatar {
                     break;
 
                 case 'png':
-                    $src = iconv('UTF-8','gb2312',$src);
                     $src_img = @imagecreatefrompng($src);
                     break;
             }

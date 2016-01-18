@@ -37,6 +37,7 @@ CREATE TABLE `answer` (
   CONSTRAINT `answer_question_id_79aaa5e2_fk_question_id` FOREIGN KEY (`question_id`) REFERENCES `question` (`id`),
   CONSTRAINT `answer_user_id_177a444f_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -563,3 +564,4 @@ DELIMITER ;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2016-01-15 20:00:20
+ALTER TABLE answer ADD COLUMN accepted BOOL NOT NULL DEFAULT FALSE;
