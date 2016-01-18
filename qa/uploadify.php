@@ -20,7 +20,7 @@ if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
     $fileParts = pathinfo($_FILES['Filedata']['name']);
 
     if (in_array($fileParts['extension'],$fileTypes)) {
-        move_uploaded_file($tempFile,$targetFile);
+        move_uploaded_file($tempFile,iconv("UTF-8","gb2312",$targetFile));
         echo '1';
     } else {
         echo 'Invalid file type.';

@@ -180,7 +180,8 @@ class CropAvatar {
                     break;
 
                 case 'png':
-                    $src_img = imagecreatefrompng($src);
+                    $src = iconv('UTF-8','gb2312',$src);
+                    $src_img = @imagecreatefrompng($src);
                     break;
             }
 

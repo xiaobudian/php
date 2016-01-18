@@ -22,8 +22,8 @@ $(function () {
         'fileTypeExts': '*.gif; *.jpg; *.png',
         //'progressData': 'speed',
         //'removeCompleted' : false,
-        'onUploadSuccess': function (data) {
-            imagesrc = '/Public/img/uploads/' + data.name;
+        'onUploadSuccess': function (file, data, response) {
+            imagesrc = '/Public/img/uploads/' + file.name;
             $image.cropper('reset').cropper('replace', imagesrc);
             $inputImage.val('');
 

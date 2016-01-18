@@ -61,14 +61,6 @@ class IndexController extends Controller
         echo 'please input keyword.';
     }
 
-    public function testago()
-    {
-
-        $now = date('Y-m-d H:i:s', time() - 390 * 24 * 3600);
-
-        echo date2ago($now);
-    }
-
     public function testquerytaggedquestion()
     {
         dump(M('tag')->query("CALL proc_question_tagged(0,5,'php')"));
@@ -88,5 +80,23 @@ class IndexController extends Controller
     {
         $result = M('question')->query("CALL  proc_question_vote(3,7,2,false)");
         dump($result);
+    }
+
+    public function testimagecreatefrompng()
+    {
+        header('Content-Type: image/png');
+        try {
+            $src = 'D:\Studio\XBD\php\qa\Public\img\uploads\无标题22.png';
+            $src = iconv('UTF-8','gb2312',$src);
+            $img = @imagecreatefrompng($src);
+            imagepng($img);
+            imagedestroy($img);
+        }catch(Exception $e){
+            dump($e->getMessage());
+        }
+    }
+    public function test_iconv($name){
+        echo iconv_get_encoding($name);
+        echo iconv('UTF-8','gb2312',$name);
     }
 }
