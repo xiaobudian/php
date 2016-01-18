@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/CREATE_QUESTION_TAG.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/qasql/proc_question_orderby_votes_desc.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/qasql/proc_question_tagged.sql" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/qasql/proc_question_vote.sql" dialect="MySQL" />
-  </component>
-</project>
