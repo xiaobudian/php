@@ -32,7 +32,12 @@ class QuestionController extends BaseController
             $_SESSION["question.total"] = $total;
         }
         $page = new \Think\Page($_SESSION["question.total"], C('PAGESIZE'));
+        $page->setConfig('prev','prev');
+        $page->setConfig('next','next');
+        $page->setConfig('first','first');
+
         $show = $page->show();
+        //dump($show);
         // 通过执行存储过程高效查询分页数据
         // 将问题关联的tag 采用GROUP_CONCAT 有效减少数据库查询次数
         $query = "call proc_question_orderby_votes_desc($page->firstRow,$page->listRows) ";

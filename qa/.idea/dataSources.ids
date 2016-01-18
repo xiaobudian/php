@@ -71,6 +71,7 @@
       <exported-key name="fquestion_user_id_54ab22c0_fk_auth_user_id" table="fquestion" schema="" catalog="qa" columns="user_id"/>
       <exported-key name="profile_user_id_1c244c57_fk_auth_user_id" table="profile" schema="" catalog="qa" columns="user_id"/>
       <exported-key name="question_user_id_2faf3d8d_fk_auth_user_id" table="question" schema="" catalog="qa" columns="user_id"/>
+      <exported-key name="qviews_ibfk_1" table="qviews" schema="" catalog="qa" columns="user_id"/>
       <exported-key name="qvote_user_id_752bdf43_fk_auth_user_id" table="qvote" schema="" catalog="qa" columns="user_id"/>
       <exported-key name="tag_user_id_2220e8d4_fk_auth_user_id" table="tag" schema="" catalog="qa" columns="user_id"/>
       <index name="username" unique="true" columns="username"/>
@@ -186,6 +187,7 @@
       <exported-key name="answer_question_id_79aaa5e2_fk_question_id" table="answer" schema="" catalog="qa" columns="question_id"/>
       <exported-key name="fquestion_question_id_55abef05_fk_question_id" table="fquestion" schema="" catalog="qa" columns="question_id"/>
       <exported-key name="question_tags_question_id_7ccad07f_fk_question_id" table="question_tags" schema="" catalog="qa" columns="question_id"/>
+      <exported-key name="qviews_ibfk_2" table="qviews" schema="" catalog="qa" columns="question_id"/>
       <exported-key name="qvote_question_id_63e065be_fk_question_id" table="qvote" schema="" catalog="qa" columns="question_id"/>
       <index name="question_e8701ad4" unique="false" columns="user_id"/>
     </table>
@@ -198,6 +200,17 @@
       <foreign-key name="question_tags_tag_id_2a5adaec_fk_tag_id" columns="tag_id" ref-table="tag" ref-schema="" ref-catalog="qa" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
       <index name="question_id" unique="true" columns="tag_id"/>
       <index name="question_tags_tag_id_2a5adaec_fk_tag_id" unique="false" columns="tag_id"/>
+    </table>
+    <table name="qviews" schema="" catalog="qa" type="TABLE">
+      <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="user_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="question_id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="first_view_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="last_view_time" sqlType="DATETIME" precision="19" scale="0" nullable="false" jdbcType="93"/>
+      <column name="times" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4" def="MA=="/>
+      <primary-key name="PRIMARY" columns="id"/>
+      <foreign-key name="qviews_ibfk_1" columns="user_id" ref-table="auth_user" ref-schema="" ref-catalog="qa" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
+      <foreign-key name="qviews_ibfk_2" columns="question_id" ref-table="question" ref-schema="" ref-catalog="qa" ref-columns="id" update-rule="3" delete-rule="3" deferrability="2"/>
     </table>
     <table name="qvote" schema="" catalog="qa" type="TABLE">
       <column name="id" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

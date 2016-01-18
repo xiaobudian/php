@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="PhpProjectServersManager">
+    <servers>
+      <server host="qa.com" id="f88e7f42-cc4d-466b-af2f-b65586a7a538" name="qa-xdebug" port="7000" />
+    </servers>
+  </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="5.3.0" />
 </project>

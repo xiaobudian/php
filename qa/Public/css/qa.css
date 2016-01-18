@@ -1,0 +1,59 @@
+.num {
+    color           : #777;
+    display         : block;
+    float           : left;
+    text-decoration : none;
+    font-size       : 12px;
+    color           : #888;
+    margin-right    : 5px;
+    padding         : 4px 8px;
+    border          : 1px solid #EEE
+}
+.first,.prev {
+    color           : #777;
+    display         : block;
+    float           : left;
+    text-decoration : none;
+    font-size       : 12px;
+    color           : #888;
+    margin          : 10px 10px 5px 10px;
+    padding         : 4px 8px;
+    border          : 1px solid #EEE
+}
+.next,.end {
+    color           : #777;
+    display         : block;
+    float           : left;
+    text-decoration : none;
+    font-size       : 12px;
+    color           : #888;
+    margin          : 10px 10px 5px 10px;
+    padding         : 4px 8px;
+    border          : 1px solid #EEE
+    -webkit-transition : color 0.15s ease, background 0.15s ease, border 0.15s ease;
+    -moz-transition    : color 0.15s ease, background 0.15s ease, border 0.15s ease;
+    -ms-transition     : color 0.15s ease, background 0.15s ease, border 0.15s ease;
+    -o-transition      : color 0.15s ease, background 0.15s ease, border 0.15s ease
+}
+.num:hover {
+    text-decoration : none
+}
+.current {
+    color           : #777;
+    display         : block;
+    float           : left;
+    text-decoration : none;
+    font-size       : 12px;
+    color           : #888;
+    margin-right    : 5px;
+    padding         : 4px 8px;
+    border          : 1px solid #EEE
+    font-weight      : normal;
+    color            : #FFF;
+    background-color : #F69C55
+}
+.pager a:hover {
+    background   : #F69C55;
+    border-color : #F69C55;
+    color        : #FFF
+}

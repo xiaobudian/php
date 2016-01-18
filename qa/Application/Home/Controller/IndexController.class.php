@@ -9,53 +9,7 @@ class IndexController extends Controller
 {
     public function index()
     {
-////        echo memory_get_usage() . '<br />';
-////        G('begin');
-//        $key = 'question:' . 'newest';
-//        $mem = Memcached::getInstance();
-//        $questions = $mem->get($key);
-//
-//        if (!$questions) {
-//            //echo 'refreshing' . '<br />';
-//
-//            $questions =
-//                M('question q')
-//                    ->order('q.id desc')
-//                    ->join('auth_user u on q.user_id= u.id')
-//                    ->limit(20)
-//                    ->field('q.id,q.title,q.votes,q.answers,q.views,q.ct,u.username,q.user_id,null as tags')
-//                    ->select();
-//            $count = count($questions);
-//            for ($i = 0; $i < $count; $i++) {
-//
-//                $tags =
-//                    M('tag t')
-//                        ->join('question_tags qt on t.id = qt.tag_id')
-//                        ->where('qt.question_id = ' . $questions[ $i ][ 'id' ])
-//                        ->select();
-//
-//                $questions[ $i ][ 'tags' ] = $tags;
-////                dump($question);
-//                //array_push($question,$tags);
-//                //dump($question);
-//            }
-//            $mem->clear();
-//            $mem->set($key, $questions);
-//        } else {
-//            //echo 'cached' . '<br />';
-//        }
-//
-//
-//
-//        //dump($questions);
-//
-//        $this->assign('questions', $questions);
-////        G('end');
-////        echo memory_get_usage() . '<br />';
-////        echo G('begin', 'end') . 's';
         $this->redirect('/Home/Question/index');
-
-
     }
 
     public function mem()
@@ -90,13 +44,21 @@ class IndexController extends Controller
         echo phpinfo();
     }
 
-    public function search($keyword)
+    public function search()
     {
-        if (!$keyword) {
-            $this->redirect('index');
-            die();
+        if(isset($_POST)){
+            $keyword = $_POST['keyword'];
+            echo $keyword;
+            if (isset($keyword)) {
+                $questions = M('question')->query("select * from question where title like '%$keyword%' OR question.content like '%$keyword%'");
+                dump($questions);
+//                $this->assign('questions',$questions);
+//                $this->display();
+                die();
+            }
         }
-        echo 'sss';
+
+        echo 'please input keyword.';
     }
 
     public function testago()
