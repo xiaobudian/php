@@ -24,7 +24,7 @@ Runtime/
 /Public/img/uploads/
 /ueditor/
 # Roslyn cache directories
-*.ide/
+*.idea/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/
@@ -233,4 +233,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-.idea/workspace.xml
