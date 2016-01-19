@@ -1,18 +1,15 @@
 /**
- * Created by Administrator on 2015.12.3.
+ * 功能简介 ：问答详情页 对问题投票 收藏 添加评论
+ *          对答案进行投票 如果是问题的发起人 可以将答案标记为已接受
+ * 作者    : liushuai <849351660@qq.com>
+ * 创建时间 : 2015年12月03日
  */
 $(function () {
     var ue = UE.getEditor('editor');
-    $("#wmd-input").keyup(function () {
-
-        var txt = $("#wmd-input").val();
-        if (txt.length > 0) {
-            $('#submit-button').removeAttr('disabled');
-        } else {
-            $('#submit-button').attr('disabled', 'disabled');
-        }
-    });
-
+    /**
+     * 提交答案
+     * 检查答案是否满足条件
+     */
     $("#submit-button").click(function () {
         var answer = UE.getEditor('editor').getContentTxt();
         answer = $.trim(answer);

@@ -125,13 +125,12 @@
                                     <span itemprop="upvoteCount" class="vote-count-post ">{$a.votes}</span>
                                     <a class="{$a['vote_type']==VOTEDOWN?'vote-down-on':'vote-down-off'}" title="This answer is not useful (click again to undo)">down
                                         vote</a>
-                                    
-                                    <span class="{$q['accepted']==true?'vote-accepted-on': load-accepted-answer-date" title="loading when this answer was accepted...">accepted</span>
-
-
-                                    <div class="bounty-award-container">
-                                        <span class="bounty-award" title="This answer has been awarded bounties worth 50 reputation by cetver">+50</span>
-                                    </div>
+                                    <if condition="$q['accepted']">  <span class="vote-accepted-on load-accepted-answer-date" title="loading when this answer was accepted...">accepted</span>
+                                    <elseif condition="hadLogin()" /> <span class="vote-accepted-off load-accepted-answer-date" title="loading when this answer was accepted...">accepted</span>
+                                    </if>
+                                    <!--<div class="bounty-award-container">-->
+                                        <!--<span class="bounty-award" title="This answer has been awarded bounties worth 50 reputation by cetver">+50</span>-->
+                                    <!--</div>-->
                                 </div>
                             </td>
                             <td class="answercell">
