@@ -1,12 +1,14 @@
+DELIMITER $$
 DROP PROCEDURE IF EXISTS qa.proc_question_details;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_question_details`(
   IN qid INT,
   IN uid INT)
   BEGIN
-    SELECT q.id,q.title,q.votes,q.content,q.answers,q.views,q.ct,q.modifytime,p.pic,p.reputation,
-      u.username,q.user_id,q.favorite as favorites ,qv.vote_type,
-                           CASE WHEN fq.id IS NOT NULL then 1 end as favorite,
-                           GROUP_CONCAT(t.name SEPARATOR ',') as tags
+    SELECT q.id,q.title,q.votes,q.content,q.answers,q.views,q.ct,q.modifytime,q.user_id,
+      q.favorite as favorites,p.pic,p.reputation,
+      u.username,qv.vote_type,
+      CASE WHEN fq.id IS NOT NULL then 1 end as favorite,
+      GROUP_CONCAT(t.name SEPARATOR ',') as tags
     FROM question q
       LEFT JOIN auth_user u ON q.user_id = u.id
       LEFT JOIN profile p ON u.id = p.user_id
@@ -28,8 +30,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_question_details`(
         VALUES(uid,qid,now(),now(),1);
       ELSE
         -- 更新浏览记录 最后浏览时间和浏览次数
-        UPDATE qviews SET last_view_time = now(), times = times + 1 WHERE user_id = uid AND question_id = qid;
+        UPDATE qviews
+        SET last_view_time = now(), times = times + 1
+        WHERE user_id = uid AND question_id = qid;
       END IF ;
     END IF;
 
-  END;
+  END;;
+DELIMITER ;
