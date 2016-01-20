@@ -1,8 +1,15 @@
+<extend name="Common/layout"/>
+<block name="css">
+    <css href="/Public/css/qa.css"/>
+</block>
+<block name="content">
+    <include file="Common/questionlist"/>
+    <div class="clear" style="clear:both;"></div>
+    <br/>
+    <br class="cbt">
 
-<include file="Common/questionlist"/>
-<div class="clear" style="clear:both;"></div>
-<br/>
-<br class="cbt">
-<div class="pager fl">
-    {$page}
-</div>
+    <div class="pager fl">
+        {$page}
+    </div>
+</block>
+<block name="js"></block>

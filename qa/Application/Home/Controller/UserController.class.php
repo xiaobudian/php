@@ -53,6 +53,7 @@ class UserController extends BaseController {
             $user = M('auth_user');
             $user->startTrans();
             $user->username = $_POST[ 'username' ];
+            $user->where('id = '.getUserId())->save();
             $profile = M('profile');
             $profile->pic = $_POST[ 'pic' ];
             $profile->location = $_POST[ 'location' ];
@@ -63,8 +64,9 @@ class UserController extends BaseController {
             } else {
                 $profile->birthday = null;
             }
-            $user->commit();
+
             $profile->where($map)->save();
+            $user->commit();
         }
         $map[ 'u.id' ] = array('eq', getUserId());
         $profile = M('auth_user u')

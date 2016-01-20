@@ -17,9 +17,10 @@ $(function () {
             alert("请输入答案");
             return;
         }
+        $('#content_txt').val(answer);
         answer = UE.getEditor('editor').getContent();
         answer = encodeURI(answer);
-        $("#answer").val(answer);
+        $("#content_html").val(answer);
         $("#post-form").submit();
     });
 

@@ -42,6 +42,7 @@ class QuestionController extends BaseController
         // 将问题关联的tag 采用GROUP_CONCAT 有效减少数据库查询次数
         $query = "call proc_question_orderby_votes_desc($page->firstRow,$page->listRows) ";
         $questions = M('question')->query($query);
+//        dump($questions);
         $this->assign('page', $show);
         $this->assign('questions', $questions);
         $this->display();
@@ -67,8 +68,9 @@ class QuestionController extends BaseController
         $answers = M('answer a')
             ->where($mapanswer)
             ->order('votes desc')
-            ->join(' auth_user u on a.user_id = u.id')
-            ->field('a.id,a.votes,a.answer,a.user_id,u.username,a.ct,a.accepted')
+            ->join('left join auth_user u on a.user_id = u.id')
+            ->join('left join profile p on p.user_id = a.user_id')
+            ->field('a.id,a.votes,a.content,a.user_id,u.username,a.ct,a.accepted,p.pic,p.reputation')
             ->select();
         //如果用户已经登陆并且有答案，需要处理答案的投票信息
         if (hadLogin() && $answers) {
@@ -121,14 +123,15 @@ class QuestionController extends BaseController
     {
         $this->checkAuth();
         if (IS_POST) {
-            $answer_str = $_POST['answer'];
-            $answer_str = urldecode($answer_str);
-            $length = strlen($answer_str);
+            $content = $_POST['content_html'];
+            $content = urldecode($content);
+            $length = strlen($content);
             if ($length > 5) {
                 $answer = M('answer');
                 try {
                     $answer->startTrans();
-                    $answer->answer = $answer_str;
+                    $answer->content = $content;
+                    $answer->content_txt = $_POST['content_txt'];
                     $answer->votes = 0;
                     $answer->ct = date('Y-m-d H:i:s');
                     $answer->question_id = $_POST['question_id'];

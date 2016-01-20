@@ -14,8 +14,8 @@ return array(
 
     'DATA_CACHE_TIME' => 60, // 缓存过期时间  单位：秒
     // layout
-    'LAYOUT_ON' => true, // 使用模板
-    'LAYOUT_NAME' => 'layout', // 模板名称
+    //'LAYOUT_ON' => true, // 使用模板
+    //'LAYOUT_NAME' => 'layout', // 模板名称
 
     // 'ACTION_SUFFIX' => 'Action', // 操作方法后缀
 
@@ -29,7 +29,7 @@ return array(
     'MAIL_CHARSET' => 'utf-8',//设置邮件编码
     'MAIL_ISHTML' => TRUE, // 是否HTML格式邮件
 
-    'PAGESIZE' => 15,
+    'PAGESIZE' => 1,
     'TAGPAGESIZE' => 32,
     'TAGSUGGESTION' => 6,
 );

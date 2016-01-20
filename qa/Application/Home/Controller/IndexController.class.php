@@ -50,7 +50,14 @@ class IndexController extends Controller
             $keyword = $_POST['keyword'];
             echo $keyword;
             if (isset($keyword)) {
-                $questions = M('question')->query("select * from question where title like '%$keyword%' OR question.content like '%$keyword%'");
+
+                $query = "SELECT *
+                          FROM question q
+                          LEFT JOIN answer a ON q.id = a.question_id
+                          WHERE q.title LIKE '%$keyword%'
+                            OR q.content_txt LIKE '%$keyword%'
+                            OR a.content_txt LIKE '%$keyword%'";
+                $questions = M('question')->query($query);
                 dump($questions);
 //                $this->assign('questions',$questions);
 //                $this->display();

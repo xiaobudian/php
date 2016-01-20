@@ -13,7 +13,7 @@
                                     <div class="viewcount">votes</div>
                                 </div>
                             </div>
-                            <div class="status <php> echo $q['answers']==0?'unanswered':'answered-accepted'; </php>">
+                            <div class="status <php> echo $q['answers']>0?$q['accept']==1?'answered-accepted':'answered':'unanswered'; </php>">
                                 <strong>{$q.answers}</strong>answers
                             </div>
                         </div>
@@ -29,24 +29,23 @@
                         <div class="tags t-java t-cçç t-performance t-optimization t-branch-prediction">
                             <include file="Common/taglist" />
                         </div>
-                        <div class="started fr">
-                            <div class="user-info user-hover">
-                                <div class="user-action-time">
-                                    asked <span title="2012-06-27 13:51:36Z" class="relativetime">{$q.ct|human_time_diff}</span>
-                                </div>
-                                <div class="user-gravatar32">
-                                    <a href="{$q.user_id|userdetails}"><div class="gravatar-wrapper-32">
-                                        <img src="{$q.pic}" alt="" width="32" height="32"></div></a>
-                                </div>
-                                <div class="user-details">
-                                    <a href="{$q.user_id|userdetails}">{$q.username}</a>
-                                    <div class="-flair">
-                                        <span class="reputation-score" title="reputation score {$q.reputation}" dir="ltr">{$q.reputation}</span>
+                        <if condition="$q.modifytime eq null"> <include file="Common/userdetails"
+                                                                      username = "{$q.username}"
+                                                                      reputation = "{$q.reputation}"
+                                                                      url="{$q.user_id|userdetails}"
+                                                                      type="asked"
+                                                                      time="{$q.ct|human_time_diff}"
+                                                                      pic="{$q.pic}"/>
+                            <else /><include file="Common/userdetails"
+                                             username = "{$q.username}"
+                                             reputation = "{$q.reputation}"
+                                             url="{$q.user_id|userdetails}"
+                                             type="modified"
+                                             time="{$q.modifytime|human_time_diff}"
+                                             pic="{$q.pic}"/>
 
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </if>
+
                     </div>
                 </div>
             </volist>

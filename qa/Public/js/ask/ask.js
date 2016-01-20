@@ -81,9 +81,10 @@ function ask() {
         alert('最多5个tag！');
         return;
     }
+    $('#content_txt').val(content);
     $("input[name=summary]").val(content.substr(0,200));
     content = UE.getEditor('editor').getContent();
     content = encodeURI(content);
-    $("#post-text").val(content);
+    $("#content_html").val(content);
     $("#post-form").submit();
 }
