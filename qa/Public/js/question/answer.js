@@ -147,4 +147,30 @@ $(function () {
             gotologin();
         }
     });
+    var xbd = new XBD({domain: '/index.php/Home/'});
+
+    function accept() {
+        var id = $(this).parents('.answer').first().attr('data-answerid');
+        var accepted = $(this).hasClass('vote-accepted-on') ? 0 : 1;
+        xbd.ajax({
+            url: 'Answer/accepted',
+            data: {id: id, accepted: accepted},
+            success: function (data) {
+                if (data == 'success') {
+                    if(accepted){
+                        $('.vote-accepted-off')
+                            .removeClass('vote-accepted-off').addClass('vote-accepted-on');
+                    }else{
+                        $('.vote-accepted-on')
+                            .removeClass('vote-accepted-on').addClass('vote-accepted-off');
+                    }
+                }
+            },
+            error: function (data) {
+            }
+        });
+    }
+
+    $('.vote-accepted-on').bind('click', null, accept);
+    $('.vote-accepted-off').bind('click', null, accept);
 });

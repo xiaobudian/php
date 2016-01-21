@@ -84,6 +84,7 @@ class QuestionController extends BaseController
                 unset($mapav);
             }
         }
+        //dump($answers);
         $question[0]['q_answers'] = $answers;
         $this->assign('q', $question[0]);
         $this->display();

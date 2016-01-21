@@ -9,16 +9,16 @@
                         <div class="stats">
                             <div class="vote">
                                 <div class="votes">
-                                    <span class="vote-count-post high-scored-post"><strong>{$q.votes}</strong></span>
+                                    <span class="vote-count-post high-scored-post"><strong>{$q.votes|human_num_diff}</strong></span>
                                     <div class="viewcount">votes</div>
                                 </div>
                             </div>
                             <div class="status <php> echo $q['answers']>0?$q['accept']==1?'answered-accepted':'answered':'unanswered'; </php>">
-                                <strong>{$q.answers}</strong>answers
+                                <strong>{$q.answers|human_num_diff}</strong>answers
                             </div>
                         </div>
                         <div class="views <php> echo $q['views']>1000?'supernova':''; </php>" title="{$q.views} views">
-                            {$q.views} views
+                            {$q.views|human_num_diff} views
                         </div>
                     </div>
                     <div class="summary">

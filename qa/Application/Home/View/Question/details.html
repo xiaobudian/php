@@ -131,7 +131,7 @@
                                         <a class="{$a['vote_type']==VOTEDOWN?'vote-down-on':'vote-down-off'}"
                                            title="This answer is not useful (click again to undo)">down
                                             vote</a>
-                                        <if condition="$q['accepted']"><span
+                                        <if condition="$a['accepted'] eq 1"><span
                                                 class="vote-accepted-on load-accepted-answer-date"
                                                 title="loading when this answer was accepted...">accepted</span>
                                             <elseif condition="hadLogin()"/>
@@ -222,6 +222,7 @@
     </div>
 </block>
 <block name="js">
+    <js href="/Public/js/base.js" />
     <js href="/Public/third/ueditor/ueditor.config.js"/>
     <js href="/Public/third/ueditor/ueditor.all.js"/>
     <js href="/Public/third/ueditor/lang/zh-cn/zh-cn.js"/>

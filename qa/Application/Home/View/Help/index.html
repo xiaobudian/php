@@ -1,0 +1,248 @@
+<extend name="Common/layout"/>
+<block name="css">
+</block>
+<block name="content">
+    <div class="mainbar-full help-center" id="help-index">
+        <div class="subheader">
+            <h1>Help Center</h1>
+        </div>
+
+
+        <div id="herobox">
+            <div id="hero-content">
+                <div id="blurb">
+                    New to Stack Overflow? Find out everything you need to get started by taking the tour. If you still
+                    have questions, come back and check out the pinned articles.
+                    <br>
+                    <br>
+                    <a href="/tour" id="tell-me-more" class="button">Take the 2-minute tour</a>
+                </div>
+                <div id="desc">
+                    <b>Here's how it works:</b>
+                    <ol id="hiw">
+                        <li id="q">Anybody can ask a question
+                        </li>
+                        <li id="an">Anybody can answer
+                        </li>
+                        <li id="b">The best answers are voted up and rise to the top
+                        </li>
+                    </ol>
+                </div>
+                <div style="clear: both"></div>
+            </div>
+            <script>
+                StackExchange.ready(function () {
+
+                    var location = 0;
+                    if ($("body").hasClass("questions-page")) {
+                        location = 1;
+                        ;
+                    } else if ($("body").hasClass("question-page")) {
+                        location = 1;
+                        ;
+                    } else if ($("body").hasClass("faq-page")) {
+                        location = 5;
+                        ;
+                    } else if ($("body").hasClass("home-page")) {
+                        location = 3;
+                        ;
+                    }
+
+                    $('#tell-me-more').click(function () {
+                        StackExchange.using("gps", function () {
+                            StackExchange.gps.track("aboutpage.click", {aboutclick_location: "hero"}, true);
+                            StackExchange.gps.track("hero.action", {hero_action_type: 'cta', location: location}, true);
+                        });
+                    });
+                    $('#herobox #close').click(function () {
+                        StackExchange.using("gps", function () {
+                            StackExchange.gps.track("hero.action", {
+                                hero_action_type: "minimize",
+                                location: location
+                            }, true);
+                        });
+                        $.cookie("hero", "mini", {path: "/", expires: 365});
+                        $.ajax({
+                            url: "/hero-mini",
+                            success: function (data) {
+                                $("#herobox").fadeOut("fast", function () {
+                                    $("#herobox").replaceWith(data);
+                                    $("#herobox-mini").fadeIn("fast");
+                                });
+                            }
+                        });
+                        return false;
+                    });
+                });
+
+            </script>
+        </div>
+
+
+        <script>
+            StackExchange.using("gps", function () {
+                StackExchange.gps.track("hero.show", {hero_type: "helphero", location: 5}, true);
+            });
+        </script>
+
+        <form id="bigsearch" class="half-width" action="/help/search" method="get">
+            <table>
+                <tbody>
+                <tr>
+                    <td class="col1"><input name="q" class="textbox" type="text" maxlength="300" size="80" value=""
+                                            placeholder="Search help pages"></td>
+                    <td class="col2"><input type="submit" value="search"></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+
+        <div class="wiki-ph" data-placeholder="WikiPlaceholder-HelpCenterIntro">
+            <div class="wiki-ph-content"></div>
+
+
+        </div>
+        <h2>Find out more about…</h2>
+
+        <div>
+
+            <div class="help-category-box help-category-big-box">
+                <h3>Asking</h3>
+                <ul>
+                    <li><a href="/help/on-topic">
+                        <span class="help-post-pin"></span>
+                        What topics can I ask about here?
+                    </a></li>
+                    <li><a href="/help/dont-ask">
+                        <span class="help-post-pin"></span>
+                        What types of questions should I avoid asking?
+                    </a></li>
+                    <li><a href="/help/closed-questions">
+                        <span class="help-post-pin"></span>
+                        What does it mean if a question is "closed" or "on hold"?
+                    </a></li>
+                    <li><a href="/help/mcve">
+                        How to create a Minimal, Complete, and Verifiable example
+                    </a></li>
+                    <li><a href="/help/quality-standards-error">
+                        Why do I see a message that my question does not meet quality standards?
+                    </a></li>
+                </ul>
+                <a href="/help/asking">» View more</a>
+            </div>
+            <div class="help-category-box help-category-big-box">
+                <h3>Our model</h3>
+                <ul>
+                    <li><a href="/help/be-nice">
+                        <span class="help-post-pin"></span>
+                        Be nice.
+                    </a></li>
+                    <li><a href="/help/behavior">
+                        <span class="help-post-pin"></span>
+                        What kind of behavior is expected of users?
+                    </a></li>
+                    <li><a href="/help/interesting-topics">
+                        <span class="help-post-pin"></span>
+                        How do I find topics I'm interested in?
+                    </a></li>
+                    <li><a href="/help/formatting">
+                        How do I format my posts using Markdown or HTML?
+                    </a></li>
+                    <li><a href="/help/roomba">
+                        The Community user deleted my question! What gives?
+                    </a></li>
+                </ul>
+                <a href="/help/stackexchange">» View more</a>
+            </div>
+            <div class="help-category-box help-category-big-box">
+                <h3>Reputation &amp; Moderation</h3>
+                <ul>
+                    <li><a href="/help/site-moderators">
+                        <span class="help-post-pin"></span>
+                        Who are the site moderators, and what is their role here?
+                    </a></li>
+                    <li><a href="/help/why-vote">
+                        <span class="help-post-pin"></span>
+                        Why is voting important?
+                    </a></li>
+                    <li><a href="/index.php/Home/Help/reputation">
+                        <span class="help-post-pin"></span>
+                        What is reputation? How do I earn (and lose) it?
+                    </a></li>
+                    <li><a href="/help/bounty">
+                        What is a bounty? How can I start one?
+                    </a></li>
+                    <li><a href="/help/serial-voting-reversed">
+                        Why do I have a reputation change on my reputation page that says "voting corrected"?
+                    </a></li>
+                </ul>
+                <a href="/help/reputation">» View more</a>
+            </div>
+        </div>
+        <div>
+            <div class="help-category-box help-category-big-box">
+                <h3>Answering</h3>
+                <ul>
+                    <li><a href="/help/accepted-answer">
+                        <span class="help-post-pin"></span>
+                        What does it mean when an answer is "accepted"?
+                    </a></li>
+                    <li><a href="/help/referencing">
+                        How to reference material written by others
+                    </a></li>
+                    <li><a href="/help/answer-bans">
+                        Why are answers no longer being accepted from my account?
+                    </a></li>
+                    <li><a href="/help/deleted-answers">
+                        Why and how are some answers deleted?
+                    </a></li>
+                    <li><a href="/help/how-to-answer">
+                        How do I write a good answer?
+                    </a></li>
+                </ul>
+                <a href="/help/answering">» View more</a>
+            </div>
+            <div class="help-category-big-box help-category-double-box">
+                <div class="help-category-box">
+                    <h3>Badges</h3>
+                    <ul>
+                        <li><a href="/help/badges">View a full list of badges you can earn</a></li>
+                    </ul>
+                </div>
+                <div class="help-category-box">
+                    <h3>Privileges</h3>
+                    <ul>
+                        <li><a href="/help/privileges">View a full list of privileges you can earn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="help-category-box help-category-big-box">
+                <h3>My Account</h3>
+                <ul>
+                    <li><a href="/help/merging-accounts">
+                        <span class="help-post-pin"></span>
+                        I accidentally created two accounts; how do I merge them?
+                    </a></li>
+                    <li><a href="/help/edit-credentials">
+                        <span class="help-post-pin"></span>
+                        How do I add or remove login credentials from my account?
+                    </a></li>
+                    <li><a href="/help/reset-password">
+                        <span class="help-post-pin"></span>
+                        I lost my password; how do I reset it?
+                    </a></li>
+                    <li><a href="/help/deleting-account">
+                        <span class="help-post-pin"></span>
+                        How do I delete my account?
+                    </a></li>
+                    <li><a href="/help/question-limited">
+                        Why have I been limited to one question per week?
+                    </a></li>
+                </ul>
+                <a href="/help/account">» View more</a>
+            </div>
+        </div>
+    </div>
+</block>
+<block name="js">
+</block>

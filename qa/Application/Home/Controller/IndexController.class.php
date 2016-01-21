@@ -46,7 +46,7 @@ class IndexController extends Controller
 
     public function search()
     {
-        if(isset($_POST)){
+        if (isset($_POST)) {
             $keyword = $_POST['keyword'];
             echo $keyword;
             if (isset($keyword)) {
@@ -94,16 +94,23 @@ class IndexController extends Controller
         header('Content-Type: image/png');
         try {
             $src = 'D:\Studio\XBD\php\qa\Public\img\uploads\无标题22.png';
-            $src = iconv('UTF-8','gb2312',$src);
+            $src = iconv('UTF-8', 'gb2312', $src);
             $img = @imagecreatefrompng($src);
             imagepng($img);
             imagedestroy($img);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             dump($e->getMessage());
         }
     }
-    public function test_iconv($name){
+
+    public function test_iconv($name)
+    {
         echo iconv_get_encoding($name);
-        echo iconv('UTF-8','gb2312',$name);
+        echo iconv('UTF-8', 'gb2312', $name);
+    }
+
+    public function test_human_num_diff($num)
+    {
+        echo human_num_diff($num,4);
     }
 }

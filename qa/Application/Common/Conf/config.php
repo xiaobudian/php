@@ -32,4 +32,35 @@ return array(
     'PAGESIZE' => 1,
     'TAGPAGESIZE' => 32,
     'TAGSUGGESTION' => 6,
+
+    // 系统配置
+    // reputation
+    'MAX_REPUTATION_PER_DAY' => 200,
+//You gain reputation when:
+//question is voted up: +5
+//answer is voted up: +10
+//answer is marked “accepted”: +15 (+2 to acceptor)
+//suggested edit is accepted: +2 (up to +1000 total per user)
+//bounty awarded to your answer: + full bounty amount
+//one of your answers is awarded a bounty automatically: + half of the bounty amount (see more details about how bounties work)
+//site association bonus: +100 on each site (awarded a maximum of one time per site)
+    'QUESTION_VOTED_UP' => 5,
+    'ANSWER_VOTED_UP' => 10,
+    'ANSWER_ACCEPTED' => 15,
+    'ACCEPTOR' => 2,
+    'SUGGESTED_EDIT_ACCEPTED' => 2,
+    'SUGGESTED_TOTAL' => 1000,
+    //'SITE_ASSOCIATION_BONUS'=>100,
+
+//You lose reputation when:
+//
+//your question is voted down: −2
+//your answer is voted down: −2
+//you vote down an answer: −1
+//you place a bounty on a question: − full bounty amount
+//one of your posts receives 6 spam or offensive flags: −100
+    'QUESTION_VOTEDOWN' => -2,
+    'ANSWER_VOTEDOWN' => -2,
+    'VOTEDOWN_ANSWER' => -1,
+    'SPAMOR_OR_OFFENSIVE_FLAGS'=>-100,
 );

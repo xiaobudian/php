@@ -167,21 +167,15 @@ function human_time_diff($from, $to = '')
     return $since . ' ago';
 }
 
-function pageinfo($count){
-//    <div class="pager fl">
-//
-//
-//
-//
-//
-//    <a href="/questions?page=1&amp;sort=votes" rel="prev" title="go to page 1"> <span class="page-numbers prev">prev </span> </a>
-//    <a href="/questions?page=1&amp;sort=votes" title="go to page 1"> <span class="page-numbers">1</span> </a>
-//    <span class="page-numbers current">2</span>         <a href="/questions?page=3&amp;sort=votes" title="go to page 3"> <span class="page-numbers">3</span> </a>
-//    <a href="/questions?page=4&amp;sort=votes" title="go to page 4"> <span class="page-numbers">4</span> </a>
-//    <a href="/questions?page=5&amp;sort=votes" title="go to page 5"> <span class="page-numbers">5</span> </a>
-//    <span class="page-numbers dots">…</span>         <a href="/questions?page=725237&amp;sort=votes" title="go to page 725237"> <span class="page-numbers">725237</span> </a>
-//    <a href="/questions?page=3&amp;sort=votes" rel="next" title="go to page 3"> <span class="page-numbers next"> next</span> </a>
-//
-//</div>
-    return "sss";
+function human_num_diff($num, $precision = 1)
+{
+    $result = "";
+    if ($num < 1000) {
+        $result = $num;
+    } elseif ($num >= 1000 && $num < 1000000) {
+        $result = round($num / 1000, $precision) . 'k';
+    } else {
+        $result = round($num / 1000000, $precision) . 'm';
+    }
+    return $result;
 }
