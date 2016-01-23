@@ -157,11 +157,11 @@ $(function () {
             data: {id: id, accepted: accepted},
             success: function (data) {
                 if (data == 'success') {
-                    if(accepted){
-                        $('.vote-accepted-off')
+                    if (accepted) {
+                        $('.vote-accepted-off', $(".answer-" + id))
                             .removeClass('vote-accepted-off').addClass('vote-accepted-on');
-                    }else{
-                        $('.vote-accepted-on')
+                    } else {
+                        $('.vote-accepted-on', $(".answer-" + id))
                             .removeClass('vote-accepted-on').addClass('vote-accepted-off');
                     }
                 }

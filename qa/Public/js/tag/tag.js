@@ -6,6 +6,23 @@ $(function () {
     $("#tagfilter").keyup(function () {
         finished($('#tagfilter').val());
     })
+    $("#add").click(function () {
+        var name = $('#tagfilter').val();
+        name = $.trim(name);
+        if (name.length == 0)return;
+        if ($('#desc').length != 0) {
+            var desc = $('#desc').val();
+
+            desc = $.trim(desc);
+            if (desc.length == 0) {
+                alert('请输入对tag的描述！');
+                return;
+            }
+            $("form").submit();
+        } else {
+            window.location.href = "/index.php/Home/Tag/create/name/" + name;
+        }
+    });
 });
 var request = null;
 function finished(txt) {
@@ -20,9 +37,9 @@ function finished(txt) {
         dataType: "html",
         success: function (result) {
             if (result == 'notfound') {
-                $('input[type=submit]').removeClass();
+                $('#add').removeClass();
             } else {
-                $('input[type=submit]').addClass('hidden-important');
+                $('#add').addClass('hidden-important');
                 var domelement = $(result);
                 $("#tags_list").html(domelement);
                 if (txt == "") {

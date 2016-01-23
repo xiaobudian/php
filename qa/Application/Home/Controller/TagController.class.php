@@ -10,8 +10,10 @@ namespace Home\Controller;
 
 use Think\Page;
 
-class TagController extends BaseController {
-    public function index($p = 1) {
+class TagController extends BaseController
+{
+    public function index($p = 1)
+    {
         $tag = M('tag');
         $count = $tag->count();
         $page = new Page($count, C('TAGPAGESIZE'));
@@ -24,28 +26,34 @@ class TagController extends BaseController {
         $this->display();
     }
 
-    public function create(){
+    public function create($name)
+    {
         $this->checkAuth();
-        if($_POST){
-            $name = $_POST['tagfilter'];
+        if ($_POST) {
+            $name = $_POST['name'];
+            $desc = $_POST['desc'];
             //check 以后完善
 
             $tag = M('tag');
-            $tag->name=$name;
-            $tag->desc = $name;
+            $tag->name = $name;
+            $tag->desc = $desc;
             $tag->ct = date('Y-m-d H:i:s');
             $tag->reputation = 0;
             $tag->user_id = $_SESSION['user'][0]['id'];
             $tag->add();
+            $this->redirect('index');
 
+        } else {
+            $this->assign('name', $name);
+            $this->display();
         }
-        $this->redirect('index');
     }
 
-    public function filter() {
-        if (isset($_POST[ 'filter' ])) {
-            $filter = $_POST[ 'filter' ];
-            $map[ 'name' ] = array('LIKE', '%' . $filter . '%');
+    public function filter()
+    {
+        if (isset($_POST['filter'])) {
+            $filter = $_POST['filter'];
+            $map['name'] = array('LIKE', '%' . $filter . '%');
             $tags = M('tag')
                 //->fetchSql(true)
                 ->where($map, true)
@@ -53,7 +61,7 @@ class TagController extends BaseController {
                 ->limit(C('TAGPAGESIZE'))
                 ->select();
 
-            if(count($tags)==0) {
+            if (count($tags) == 0) {
                 echo 'notfound';
                 die();
             }
@@ -65,15 +73,15 @@ class TagController extends BaseController {
                     $html = $html . "<tr>";
                 }
                 $html = $html . '<td class="tag-cell">
-                        <a href="/index.php/Home/Question/tagged/id/' . $t[ 'id' ] . '"class="post-tag"
-                                   title="show questions tagged ' . $t[ 'name' ] . ' rel="tag">' . $t[ 'name' ] . '</a>
+                        <a href="/index.php/Home/Question/tagged/id/' . $t['id'] . '"class="post-tag"
+                                   title="show questions tagged ' . $t['name'] . ' rel="tag">' . $t['name'] . '</a>
                                 <span
                                     class="item-multiplier">
                                     <span class="item-multiplier-x">×</span>&nbsp;
-                                    <span class="item-multiplier-count">' . $t[ 'reputation' ] . '</span>
+                                    <span class="item-multiplier-count">' . $t['reputation'] . '</span>
                                 </span>
                                 <div class="excerpt">
-                                    ' . $t[ 'desc' ] . '
+                                    ' . $t['desc'] . '
                                 </div>
                                 <!--<div>-->
                                     <!--<div class="stats-row fl"><a-->

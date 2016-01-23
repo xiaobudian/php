@@ -29,7 +29,7 @@ return array(
     'MAIL_CHARSET' => 'utf-8',//设置邮件编码
     'MAIL_ISHTML' => TRUE, // 是否HTML格式邮件
 
-    'PAGESIZE' => 1,
+    'PAGESIZE' => 5,
     'TAGPAGESIZE' => 32,
     'TAGSUGGESTION' => 6,
 

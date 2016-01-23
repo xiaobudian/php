@@ -19,20 +19,30 @@
                     A tag is a keyword or label that categorizes your question with other, similar questions. Using the
                     right tags makes it easier for others to find and answer your question.
                 </p>
-
-                <form action="/index.php/Home/Tag/create" method="post">
-                    <table>
-                        <tbody>
-                        <tr>
-                            <td>Type to find tags:</td>
-                            <td style="padding-left:5px">
-                                <input id="tagfilter" name="tagfilter" type="text">
-                            </td>
-                            <td>&nbsp;&nbsp;<input type="submit" value="Add" class="hidden-important"></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </form>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>Type to find tags:</td>
+                        <td style="padding-left:5px">
+                            <input id="tagfilter" name="tagfilter" type="text">
+                        </td>
+                        <td>&nbsp;&nbsp;<input type="button" id="add" value="Add" class="hidden-important"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <!--<form action="/index.php/Home/Tag/create" method="post">-->
+                <!--<table>-->
+                <!--<tbody>-->
+                <!--<tr>-->
+                <!--<td>Type to find tags:</td>-->
+                <!--<td style="padding-left:5px">-->
+                <!--<input id="tagfilter" name="tagfilter" type="text">-->
+                <!--</td>-->
+                <!--<td>&nbsp;&nbsp;<input type="submit" value="Add" class="hidden-important"></td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+                <!--</form>-->
             </div>
             <div id="tags_list">
                 <table id="tags-browser">
